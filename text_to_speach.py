@@ -73,38 +73,38 @@ def make_tts_audiofile(text, chat_id, message_id, voice_generator='elevenlabs'):
         case 'elevenlabs':
             return text_to_speach_elevenlabs(text, chat_id, message_id)
 
-        case 'silero':
-            return text_to_speach_silero(text, chat_id, message_id)
+        # case 'silero':
+        #     return text_to_speach_silero(text, chat_id, message_id)
 
 
-def text_to_speach_silero(text, chat_id, message_id):
-    make_path_wav = os.path.normpath(
-        os.path.join(parent_dir, 'ai_answers', f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.wav'))
-    make_path_mp3 = os.path.normpath(
-        os.path.join(parent_dir, 'ai_answers', f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3'))
-    # Переаодим текст в речь с имользованием модели и настроек
-    audio = model.apply_tts(text=text + "..",
-                            speaker=speaker,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yo)
-
-    print(f'Текст переведен в рчеь')
-    # сохраняем аудиофайл
-    torchaudio.save(make_path_wav,
-                    audio.unsqueeze(0),
-                    sample_rate=sample_rate,
-
-                    )
-    audio = AudioSegment.from_wav(make_path_wav)
-    # Сохранение аудиофайл в формате mp3
-
-    audio.export(make_path_mp3, format="mp3")
-    # Удаляем WAV файл c диска
-    os.remove(make_path_wav)
-    if not path(make_path_wav).exists():
-        print(f'файл wav по пути {make_path_wav} удален')
-        return make_path_mp3
+# def text_to_speach_silero(text, chat_id, message_id):
+#     make_path_wav = os.path.normpath(
+#         os.path.join(parent_dir, 'ai_answers', f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.wav'))
+#     make_path_mp3 = os.path.normpath(
+#         os.path.join(parent_dir, 'ai_answers', f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3'))
+#     # Переаодим текст в речь с имользованием модели и настроек
+#     audio = model.apply_tts(text=text + "..",
+#                             speaker=speaker,
+#                             sample_rate=sample_rate,
+#                             put_accent=put_accent,
+#                             put_yo=put_yo)
+#
+#     print(f'Текст переведен в рчеь')
+#     # сохраняем аудиофайл
+#     torchaudio.save(make_path_wav,
+#                     audio.unsqueeze(0),
+#                     sample_rate=sample_rate,
+#
+#                     )
+#     audio = AudioSegment.from_wav(make_path_wav)
+#     # Сохранение аудиофайл в формате mp3
+#
+#     audio.export(make_path_mp3, format="mp3")
+#     # Удаляем WAV файл c диска
+#     os.remove(make_path_wav)
+#     if not path(make_path_wav).exists():
+#         print(f'файл wav по пути {make_path_wav} удален')
+#         return make_path_mp3
 
 
 def text_to_speach_elevenlabs(text, chat_id, message_id, voice="Michael"):
