@@ -16,6 +16,8 @@ from pathlib import Path as path
 from elevenlabs import generate, save, set_api_key
 from environs import Env
 
+from container import parent_dir
+
 env: Env = Env()
 env.read_env('.env')
 set_api_key(env("ELEVEN_API_KEY"))
@@ -78,10 +80,10 @@ def make_tts_audiofile(text, chat_id, message_id, voice_generator='elevenlabs'):
 
 
 def text_to_speach_silero(text, chat_id, message_id):
-    make_path_wav = os.path.join(r"D:\python projects\non_comertial\auto_cust_dev\ai_answers",
-                                 f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.wav')
-    make_path_mp3 = os.path.join(r"D:\python projects\non_comertial\auto_cust_dev\ai_answers",
-                                 f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3')
+    make_path_wav = os.path.normpath(
+        os.path.join(parent_dir, 'ai_answers', f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.wav'))
+    make_path_mp3 = os.path.normpath(
+        os.path.join(parent_dir, 'ai_answers', f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3'))
     # Переаодим текст в речь с имользованием модели и настроек
     audio = model.apply_tts(text=text + "..",
                             speaker=speaker,
@@ -107,16 +109,17 @@ def text_to_speach_silero(text, chat_id, message_id):
         return make_path_mp3
 
 
-def text_to_speach_elevenlabs(text, chat_id, message_id):
+def text_to_speach_elevenlabs(text, chat_id, message_id, voice="Michael"):
     audio = generate(
         text=text,
-        voice="Michael",
+        voice=voice,
         model="eleven_multilingual_v2"
     )
-    filename = os.path.join(r"D:\python projects\non_comertial\auto_cust_dev\ai_answers",
-                            f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3')
+
+    filename = os.path.normpath(
+        os.path.join(parent_dir,"ai_answers",
+                            f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3'))
     save(audio, filename=filename)
-    print()
     return os.path.normpath(filename)
 
 
@@ -151,12 +154,4 @@ def text_to_speach_via_api(text: str, file_name, lang: str = 'ru'):
 
 
 if __name__ == '__main__':
-    text_to_speak = " Нам и так потребовалась буквально пара часов для добавления нового высококачественного голоса и мы уже можем генерировать бесконечные случайные голоса. " \
-                    "Возможно мы снизим штатное количество аудио для добавления нового высококачественного голоса до нескольких минут вместе с возможностью использования фонем;"
-    # va_speak(text_to_speak)
-    output_audio_path = r"D:\python projects\non_comertial\auto_cust_dev\ai_answers\output_audio.mp3"
-    output_audio_path_ogg = r"D:\python projects\non_comertial\auto_cust_dev\ai_answers\output_audio.ogg"
-    # make_tts_audiofile(text_to_speak, output_audio_path,output_audio_path_ogg)
-    # tts_to_ogg(text_to_speak)
-    text_to_speach_via_api(text_to_speak, output_audio_path)
     print()

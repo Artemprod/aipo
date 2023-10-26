@@ -330,6 +330,7 @@ class SendDispatcher:
                                self.data_base_controller.client_repository.retrieve_all_data_from_all_users() if
                                not self.data_base_controller.client_repository.check_report_send(client.telegram_id)]
             if len(clients_objects) == 0:
+                print("Нету данных для отчета")
                 continue
             # Извлекаем данные с базы двнных
             for client in clients_objects:

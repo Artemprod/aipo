@@ -1,6 +1,7 @@
 # Контейнер для Dependency Injection. В этом контейнере инициализируются все классы
 # _________________________________
 import logging
+from os import path
 
 from BD.Mongo.monog_db import MongoPromptRepositoryORM, MongoORMConnection, MongoClientUserRepositoryORM, \
     MongoDataBaseRepository
@@ -34,6 +35,9 @@ send_dispatcher = SendDispatcher(pdf_generator=pdf_generator,
                                  gpt_reporter=gpt_reporter,
                                  data_base=data_base_controller,
                                  google_sheet_worker=google_sheet)
+#Корневая директория
+parent_dir = path.dirname(path.abspath(__file__))
+print()
 #TODO: Добавить сюда чат гпт класс
 if __name__ == '__main__':
     send_dispatcher.send_data_to_goggle_sheet(delay=1, frequency=2, regim='gpt_4_categorized')

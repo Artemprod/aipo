@@ -2,8 +2,11 @@ from io import BytesIO
 import vosk
 import json
 from pydub import AudioSegment
-model_path = r"D:\python projects\non_comertial\auto_cust_dev\model\vosk-model-small-ru-0.22"
-# model_path = r"D:\python projects\non_comertial\auto_cust_dev\model\vosk-model-ru-0.42"
+from os import path
+
+from container import parent_dir
+
+model_path =path.normpath(path.join(f"{path.join(parent_dir,'model','vosk-model-small-ru-0.22')}"))
 model = vosk.Model(model_path)
 samplerate=16000
 
@@ -67,7 +70,5 @@ def voice_to_text(voice_message_path):
         return transcribed_text
 
 if __name__ == '__main__':
+    print()
 
-    voice_message_path = r'D:\python projects\non_comertial\auto_cust_dev\audio_samples\audio_2023-09-13_16-03-42.ogg'
-
-    voice_to_text(voice_message_path)
