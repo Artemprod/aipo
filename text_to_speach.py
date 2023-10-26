@@ -5,7 +5,6 @@ from datetime import datetime
 
 from gtts import gTTS
 import torch
-import sounddevice as sd
 import time
 from pydub import AudioSegment
 from functools import wraps
