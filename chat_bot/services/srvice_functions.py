@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from pathlib import Path
 from time import sleep
@@ -6,6 +7,7 @@ from aiogram.types import Message, FSInputFile, ContentType
 
 from BD.Mongo.mongo_enteties import Client
 from BD.Mongo.monog_db import MongoDataBaseRepository
+from container import parent_dir
 from text_to_speach import make_tts_audiofile
 
 
@@ -62,10 +64,12 @@ async def get_user_voice_massage_from_telegram_to_local_disk(data_from_income_me
     else:
         await data_from_income_message.reply("Формат документа не поддерживается")
         return
-
     file = await bot.get_file(file_id)
     file_path = file.file_path
-    file_on_disk = Path(r'.\user_answers', f"{file_id}.mp3")
-    await bot.download_file(file_path, destination=file_on_disk.as_posix())
+    user_answers_dir = os.path.join(parent_dir, "user_answers")
+    if not os.path.exists(user_answers_dir):
+        os.makedirs(user_answers_dir)
 
+    file_on_disk = os.path.normpath(os.path.join(user_answers_dir, f"{file_id}.mp3"))
+    await bot.download_file(file_path, destination=file_on_disk)
     return file_on_disk

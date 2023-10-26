@@ -2,13 +2,11 @@ import io
 import os
 from datetime import datetime
 
-
 from gtts import gTTS
 import torch
 import time
 from pydub import AudioSegment
 from functools import wraps
-
 
 from elevenlabs import generate, save, set_api_key
 from environs import Env
@@ -46,17 +44,6 @@ def timer(func):
         return result
 
     return wraper
-
-
-# воспроизводим
-def va_speak(what: str):
-    audio = model.apply_tts(text=what + "..",
-                            speaker=speaker,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yo)
-
-    sd.play(audio, sample_rate * 1.05)
 
 
 def make_tts_audiofile(text, chat_id, message_id, voice_generator='elevenlabs'):
@@ -112,10 +99,12 @@ def text_to_speach_elevenlabs(text, chat_id, message_id, voice="Michael"):
         voice=voice,
         model="eleven_multilingual_v2"
     )
-
+    ai_answers_dir = os.path.join(parent_dir, "ai_answers")
+    if not os.path.exists(ai_answers_dir):
+        os.makedirs(ai_answers_dir)
     filename = os.path.normpath(
-        os.path.join(parent_dir,"ai_answers",
-                            f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3'))
+        os.path.join(parent_dir, "ai_answers",
+                     f'{chat_id}_{message_id}_{datetime.now().strftime("%Y%H%M%S")}.mp3'))
     save(audio, filename=filename)
     return os.path.normpath(filename)
 
