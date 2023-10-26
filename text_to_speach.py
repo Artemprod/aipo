@@ -2,10 +2,8 @@ import io
 import os
 from datetime import datetime
 
-import playsound
 import torchaudio
 from gtts import gTTS
-from io import BytesIO
 import torch
 import sounddevice as sd
 import time

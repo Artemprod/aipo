@@ -6,9 +6,9 @@ from os import path
 
 from container import parent_dir
 
-model_path =path.normpath(path.join(f"{path.join(parent_dir,'model','vosk-model-small-ru-0.22')}"))
+model_path = path.normpath(path.join(parent_dir, 'model', 'vosk-model-small-ru-0.22'))
 model = vosk.Model(model_path)
-samplerate=16000
+samplerate = 16000
 
 
 def ogg_to_mp3_in_memory(ogg_data):
@@ -32,6 +32,7 @@ def ogg_to_mp3_in_memory(ogg_data):
     except Exception as e:
         print(f"Ошибка при конвертации: {str(e)}")
         return None
+
 
 def voice_message_recognition(voice_message_path):
     audio_segment = AudioSegment.from_file(voice_message_path, format='ogg',
@@ -63,12 +64,13 @@ def voice_message_recognition(voice_message_path):
     recognized_text = result["text"]
     return recognized_text
 
+
 def voice_to_text(voice_message_path):
     transcribed_text = voice_message_recognition(voice_message_path)
     if transcribed_text:
         print("Распознанный текст:", transcribed_text)
         return transcribed_text
 
+
 if __name__ == '__main__':
     print()
-
