@@ -2,25 +2,16 @@ version: "3.8"
 services:
   main:
     build: .
-    depends_on:
-      - mongo
+    volumes:
+      - .:.
+    links:
+      - mongodb
 
-  mongo:
+  mongodb:
     image: mongo
     restart: always
     volumes:
       - database:data/db
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ''
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ''
-      ME_CONFIG_MONGODB_URL: mongodb://localhost:27017/
-
 
 
 volumes:

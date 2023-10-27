@@ -5,7 +5,9 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install -r requirements.txt
-RUN export PYTHONPATH=$PYTHONPATH: .
+RUN apt-get update -y && apt-get install -y ffmpeg
+
+ENV PYTHONPATH $PYTHONPATH:.
 
 
 #Вот здесь создание скрипта для запуска нескольких файлов 1 раз при создании к

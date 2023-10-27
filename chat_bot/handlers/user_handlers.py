@@ -23,7 +23,8 @@ async def processed_voice_dialog(message: Message, data_base: MongoDataBaseRepos
     data_base.client_repository.check_user_in_database(message.chat.id)
     # Сохраняем голосовое от пользователя на диске
     file_on_disk = await get_user_voice_massage_from_telegram_to_local_disk(message,
-                                                                            bot=bot)
+                                                                      bot=bot)
+
     recognized_text = voice_to_text(file_on_disk)
     data_base.client_repository.update_user_conversation_by_chat_id(user_telegram_id=message.chat.id,
                                                                     answer={"role": "user",
