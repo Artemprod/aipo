@@ -304,6 +304,7 @@ class SendDispatcher:
 
                 По окончанию обработки, метод ожидает указанный интервал (frequency) перед следующей проверкой и отправкой данных.
                 """
+            print()
             gpt_system_prompt = self.data_base_controller.prompt_repository.get_category_system_prompts()
             user_dialog = client.conversation
             dialog_without_system_prompt = [i for i in user_dialog if i['role'] != 'system']

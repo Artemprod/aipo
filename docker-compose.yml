@@ -1,15 +1,17 @@
 version: "3.8"
 services:
-  main:
+  aipo:
     build: .
     volumes:
       - .:.
-    links:
-      - mongodb
+    depends_on:
+      - mongo
 
-  mongodb:
+  mongo:
     image: mongo
     restart: always
+    ports:
+      - "8081:8081"
     volumes:
       - database:data/db
 

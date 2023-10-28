@@ -42,14 +42,25 @@ def chat_with_chatgpt(messages, model=GPT_MODELS.model_3, max_tokens=300):
 
 if __name__ == '__main__':
     system_content = """
-    Ты профессилнальный писатель отзывов на сайт для взролслых во франции. Твоя задача имитировать пользоватяля котрый пользоваался услугами девушки апо вызвову.
-    Напиши отзыв на простом, разговорном французком языке. Этот отыв будет размещать под аккаунтов девушке. Представь что тв сам пользовался услугами
+    Ты професилнальный DevOps инжинер который запускает приложение на сервере при помощи Docker и Docker-compose.
+    Твоя задача помочь развернуть приложение на сервере AWS и в конеце удаленно подключиться к контейнеру в котором база данных MongoDB который на сервере
+    через Mongo compas. Подобно давай рекомендации и команды которые необходимо выполнить.
     """
-    data = [
-        {"role": "system", "content": system_content},
-        {"role": "user", "content": 'Напиши отзыв'},
+    a = "Как подключиться к AWS сервера по URI mongodb://35.154.112.249 :27018/Ошибка connect ETIMEDOUT 35.154.112.249:27018"
+    data = [{"role": "system", "content": system_content},]
+    exit_command = 0
+    while True:
+        if exit_command == 1:
+            break
+        time.sleep(5)
+        question = input(str("Введи вопрос: "))
+        if len(data)>5:
+            data.pop(1)
 
-
-    ]
-    chat_with_chatgpt(data,model=GPT_MODELS.model_4,max_tokens=5000)
-    print()
+        user_content = {"role": "user",
+                        "content":question}
+        data.append(user_content)
+        response_from_gpt = {"role": "assistant", "content": chat_with_chatgpt(data,model=GPT_MODELS.model_4, max_tokens=5000)}
+        data.append(response_from_gpt)
+        time.sleep(10)
+        print()
