@@ -3,7 +3,7 @@ services:
   aipo:
     build: .
     volumes:
-      - .:.
+      - aipo:/aipo
     depends_on:
       - mongo
 
@@ -17,4 +17,5 @@ services:
 
 
 volumes:
+  aipo:
   database:
