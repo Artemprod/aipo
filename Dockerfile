@@ -20,6 +20,5 @@ ENV PYTHONPATH $PYTHONPATH:.
 #
 ##вот сюда запуск срипта
 #CMD ["./run_multiple_scripts.sh"]
-RUN python3 /chat_bot/bot.py
 
 CMD ["python3", "/chat_bot/bot.py"]
