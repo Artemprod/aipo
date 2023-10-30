@@ -3,7 +3,7 @@ services:
   aipo:
     build: .
     volumes:
-      - $(pwd):/aipo
+      - /root/aipo:/aipo
     depends_on:
       - mongo
 
@@ -13,5 +13,5 @@ services:
     ports:
       - "8083:8092"
     volumes:
-      - $(pwd)/BD/data:/BD/data
+      - /root/aipo/BD/data:/BD/data
 
