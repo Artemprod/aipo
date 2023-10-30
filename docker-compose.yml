@@ -1,12 +1,5 @@
 version: "3.8"
 services:
-  aipo:
-    build: .
-    volumes:
-      - /root/aipo:/aipo
-    depends_on:
-      - mongo
-
   mongo:
     image: mongo
     restart: always
@@ -14,4 +7,12 @@ services:
       - "8083:8092"
     volumes:
       - /root/aipo/BD/data:/BD/data
+  aipo:
+    build: .
+    volumes:
+      - /root/aipo:/aipo
+    depends_on:
+      - mongo
+
+
 
