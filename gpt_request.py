@@ -35,7 +35,7 @@ def chat_with_chatgpt(messages, model=GPT_MODELS.model_3, max_tokens=300):
         presence_penalty=-0,
         max_tokens=max_tokens
     )
-    response_message = response['choices'][0]['message']['content'].strip()
+    response_message = response.dict()['choices'][0]['message']['content'].strip()
     print('ответ от чата: ' + response_message)
     return response_message
 
