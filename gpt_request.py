@@ -23,7 +23,7 @@ class GPT_MODELS:
 
 def chat_with_chatgpt(messages, model=GPT_MODELS.model_3, max_tokens=300):
     print(messages)
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model=model,
         timeout=6000,
         messages=messages,
