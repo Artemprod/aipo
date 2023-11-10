@@ -3,12 +3,11 @@ FROM python:3.11
 COPY . .
 
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN pip install --upgrade pip
-RUN pip install --upgrade setuptools
-RUN pip install -r requirements.txt
-RUN apt-get install -y ffmpeg
+RUN apt-get update -y && apt-get upgrade -y && pip install --upgrade pip  \
+    && pip install --upgrade setuptools \
+    && pip install -r requirements.txt && apt-get install -y ffmpeg \
+    && apt-get clean
+
 ENV PYTHONPATH $PYTHONPATH:.
 
 

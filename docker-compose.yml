@@ -9,6 +9,7 @@ services:
       - /root/aipo/BD/data:/BD/data
   aipo:
     build: .
+    restart: always
     volumes:
       - /root/aipo:/aipo
     depends_on:
